@@ -1,5 +1,6 @@
 package com.agriculture.service.impl;
 
+import com.agriculture.common.context.IpContext;
 import com.agriculture.common.utils.HttpClientUtil;
 import com.agriculture.pojo.entity.Weather;
 import com.agriculture.service.AmapService;
@@ -48,7 +49,10 @@ public class AmapServiceImpl implements AmapService {
     @Override
     public String getAdcode() {
         HashMap<String, String> map = new HashMap<>();
+        String ip = IpContext.getIpAddress();
+        log.info("用户当前ip:{}",ip);
         map.put("key", key);
+        map.put("ip",ip);
         String json = HttpClientUtil.doGet(getIpURL, map);
         JSONObject jsonObject = JSON.parseObject(json);
         return jsonObject.getString("adcode");

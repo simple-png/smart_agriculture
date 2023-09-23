@@ -1,5 +1,6 @@
 package com.agriculture.controller.user;
 
+import com.agriculture.common.context.IpContext;
 import com.agriculture.common.result.Result;
 import com.agriculture.pojo.entity.Weather;
 import com.agriculture.service.AmapService;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/user")
@@ -24,5 +27,12 @@ public class WeatherController {
         log.info("获取当前天气");
         Weather weather = amapService.getWeather();
         return Result.success(weather);
+    }
+
+    @GetMapping("/ip")
+    protected Result getIp(HttpServletRequest request) {
+        String ipAddress = request.getRemoteAddr();
+        IpContext.setIpAddress(ipAddress);
+        return Result.success();
     }
 }
