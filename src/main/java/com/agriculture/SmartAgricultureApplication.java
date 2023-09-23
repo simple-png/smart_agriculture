@@ -1,6 +1,5 @@
 package com.agriculture;
 
-import com.agriculture.common.properties.JwtProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement //开启注解方式的事务管理
 @EnableCaching //开启缓存注解功能
 @Slf4j
-@EnableConfigurationProperties(JwtProperties.class)
+@EnableConfigurationProperties
 @EnableScheduling //开启任务调度
 public class SmartAgricultureApplication {
 

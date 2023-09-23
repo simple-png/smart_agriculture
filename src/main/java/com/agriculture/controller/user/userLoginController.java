@@ -83,6 +83,7 @@ public class userLoginController {
     public Result update(@RequestBody UserUpdateWithUserDTO dto) {
         log.info("用户信息修改:{}", dto);
         userService.updateWithUser(dto);
+        //在方法中设置的username 无法使用@CacheEvict
         cleanCache(cacheName + "::" + dto.getUsername().hashCode());
         return Result.success();
     }

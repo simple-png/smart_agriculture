@@ -34,3 +34,5 @@ farm:
     user-secret-key: ip[san/]|anv8/aK04@GVd8*-3|'g>iF7*#f
     user-ttl: 72000000
     user-token-name: authentication
+  amap:
+    key: 4b043f375c41ce905a12f2681f5529fd
