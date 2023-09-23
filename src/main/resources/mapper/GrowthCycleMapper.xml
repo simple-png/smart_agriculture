@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.agriculture.mapper.GrowthCycleMapper">
+    <select id="pageQuery" resultType="com.agriculture.pojo.entity.GrowthCycle">
+        select * from growth_cycle
+        <where>
+            <if test="categoryId!=null">and category_id=#{categoryId},</if>
+            <if test="name!=null">and name=#{name},</if>
+            <if test="cyclePercent!=null">and cycle_percent=#{cyclePercent},</if>
+            <if test="soilMoisture!=null">and soil_moisture=#{soilMoisture},</if>
+        </where>
+    </select>
+    <update id="update">
+        update growth_cycle
+        <set>
+            <if test="categoryId!=null">category_id=#{categoryId},</if>
+            <if test="name!=null">name=#{name},</if>
+            <if test="cyclePercent!=null">cycle_percent=#{cyclePercent},</if>
+            <if test="soilMoisture!=null">soil_moisture=#{soilMoisture},</if>
+        </set>
+        where id =#{id}
+    </update>
+</mapper>
