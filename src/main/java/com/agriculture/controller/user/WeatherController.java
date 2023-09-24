@@ -5,6 +5,7 @@ import com.agriculture.common.result.Result;
 import com.agriculture.pojo.entity.Weather;
 import com.agriculture.service.AmapService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ public class WeatherController {
     @Autowired
     private AmapService amapService;
 
+    @ApiOperation("获取当前天气")
     @GetMapping("/weather")
     public Result<Weather> getWeather() {
         log.info("获取当前天气");
@@ -29,8 +31,9 @@ public class WeatherController {
         return Result.success(weather);
     }
 
+    @ApiOperation("获取用户ip地址")
     @GetMapping("/ip")
-    protected Result getIp(HttpServletRequest request) {
+    public Result getIp(HttpServletRequest request) {
         String ipAddress = request.getRemoteAddr();
         IpContext.setIpAddress(ipAddress);
         return Result.success();

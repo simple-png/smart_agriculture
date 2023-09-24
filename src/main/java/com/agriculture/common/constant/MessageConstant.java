@@ -17,4 +17,5 @@ public class MessageConstant {
     public static final String NOT_CULTIVATED = "未耕种";
     public static final String LACK_INFORMATION = "缺少信息";
     public static final String KEY_ERROR = "键为空";
+    public static final String FAILED_GET_NEWS = "获取新闻失败";
 }
