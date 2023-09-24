@@ -4,7 +4,6 @@ import com.agriculture.common.context.BaseContext;
 import com.agriculture.common.result.Result;
 import com.agriculture.pojo.DTO.FieldDTO;
 import com.agriculture.pojo.entity.Field;
-import com.agriculture.pojo.entity.GrowthCycle;
 import com.agriculture.service.FieldService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,10 +30,10 @@ public class fieldController {
     }
 
     @PostMapping("/delete/{id}")
-    @ApiOperation("删除用户田地")
-    public Result deleteField(@PathVariable Long id) {
-        log.info("删除用户田地{}", id);
-        fieldService.deleteFieldById(id);
+    @ApiOperation("根据田地id删除用户田地")
+    public Result deleteField(@PathVariable("id") Long fieldId) {
+        log.info("删除用户田地{}", fieldId);
+        fieldService.deleteFieldById(fieldId);
         return Result.success();
     }
 
@@ -47,7 +46,7 @@ public class fieldController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation("根据id获取田地")
+    @ApiOperation("根据田地id获取田地")
     public Result<Field> getById(@PathVariable Long id) {
         log.info("根据田地id:{}获取数据", id);
         Field field = fieldService.getById(id);
@@ -71,10 +70,10 @@ public class fieldController {
     }
 
     @PostMapping("/iswatering/{id}")
-    @ApiOperation("是否要浇水")
-    public Result<String> isWatering(@RequestBody GrowthCycle growthCycle, @PathVariable Long id) {
+    @ApiOperation("是否要浇水,id为田地id")
+    public Result<String> isWatering(@PathVariable Long id) {
         log.info("是否需要浇水");
-        String watering = fieldService.isWatering(id, growthCycle);
+        String watering = fieldService.isWatering(id);
         return Result.success(watering);
     }
 }

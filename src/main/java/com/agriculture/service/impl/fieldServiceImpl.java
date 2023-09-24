@@ -7,6 +7,7 @@ import com.agriculture.mapper.FieldMapper;
 import com.agriculture.pojo.DTO.FieldDTO;
 import com.agriculture.pojo.entity.Field;
 import com.agriculture.pojo.entity.GrowthCycle;
+import com.agriculture.service.CropCycleService;
 import com.agriculture.service.FieldService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -21,6 +22,8 @@ import java.util.List;
 public class fieldServiceImpl implements FieldService {
     @Autowired
     private FieldMapper fieldMapper;
+    @Autowired
+    private CropCycleService cropCycleService;
 
     @Override
     public void addField(FieldDTO fieldDTO) {
@@ -49,6 +52,9 @@ public class fieldServiceImpl implements FieldService {
 
     @Override
     public void deleteFieldById(Long id) {
+        Field field = fieldMapper.getById(id);
+        if (field == null)
+            throw new FieldExistErrorException(MessageConstant.NO_FIELD);
         fieldMapper.deleteFieldById(id);
     }
 
@@ -75,7 +81,8 @@ public class fieldServiceImpl implements FieldService {
     }
 
     @Override
-    public String isWatering(Long id, GrowthCycle growthCycle) {
+    public String isWatering(Long id) {
+        GrowthCycle growthCycle = cropCycleService.getGrowthCycleByFieldId(id);
         Field field = fieldMapper.getById(id);
         if (field == null)
             throw new FieldExistErrorException(MessageConstant.NO_FIELD);

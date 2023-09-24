@@ -2,7 +2,6 @@ package com.agriculture.service;
 
 import com.agriculture.pojo.DTO.FieldDTO;
 import com.agriculture.pojo.entity.Field;
-import com.agriculture.pojo.entity.GrowthCycle;
 
 import java.util.List;
 
@@ -55,9 +54,8 @@ public interface FieldService {
      * 判断是否需要浇水
      *
      * @param id
-     * @param growthCycle
      */
-    String isWatering(Long id, GrowthCycle growthCycle);
+    String isWatering(Long id);
 
     /**
      * 根据农作物id来恢复田地为未耕种模式

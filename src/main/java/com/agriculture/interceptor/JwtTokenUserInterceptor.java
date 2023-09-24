@@ -55,7 +55,6 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor {
             BaseContext.setCurrentId(userId);
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
             //4、不通过，响应401状态码
             response.setStatus(401);
             return false;
