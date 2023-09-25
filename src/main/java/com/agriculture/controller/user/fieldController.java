@@ -3,7 +3,10 @@ package com.agriculture.controller.user;
 import com.agriculture.common.context.BaseContext;
 import com.agriculture.common.result.Result;
 import com.agriculture.pojo.DTO.FieldDTO;
+import com.agriculture.pojo.DTO.RecommendQueryDTO;
+import com.agriculture.pojo.VO.RecommendCropVO;
 import com.agriculture.pojo.entity.Field;
+import com.agriculture.service.CropService;
 import com.agriculture.service.FieldService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +23,8 @@ import java.util.List;
 public class fieldController {
     @Autowired
     private FieldService fieldService;
+    @Autowired
+    private CropService cropService;
 
     @PostMapping("/add")
     @ApiOperation("添加用户田地")
@@ -75,5 +80,13 @@ public class fieldController {
         log.info("是否需要浇水");
         String watering = fieldService.isWatering(id);
         return Result.success(watering);
+    }
+
+    @ApiOperation("推荐用户种地(有选择性是否根据种类推荐)")
+    @GetMapping("/recommend")
+    public Result<List<RecommendCropVO>> recommendCrop(RecommendQueryDTO dto) {
+        log.info("推荐用户种地");
+        List<RecommendCropVO> list = cropService.recommendCropByUserId(dto);
+        return Result.success(list);
     }
 }

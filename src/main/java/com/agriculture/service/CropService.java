@@ -3,7 +3,9 @@ package com.agriculture.service;
 import com.agriculture.common.result.PageResult;
 import com.agriculture.pojo.DTO.CropDTO;
 import com.agriculture.pojo.DTO.CropPageQueryDTO;
+import com.agriculture.pojo.DTO.RecommendQueryDTO;
 import com.agriculture.pojo.VO.CropVO;
+import com.agriculture.pojo.VO.RecommendCropVO;
 
 import java.util.List;
 
@@ -41,4 +43,17 @@ public interface CropService {
      */
     void deleteBatch(List<Long> ids);
 
+    /**
+     * 推荐用户种植的农作物
+     * @param dto
+     * @return
+     */
+    List<RecommendCropVO> recommendCropByUserId(RecommendQueryDTO dto);
+
+    /**
+     * 根据类别id查询农作物
+     * @param id
+     * @return
+     */
+    List<CropVO> getByCategoryId(Long id);
 }

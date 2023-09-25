@@ -3,7 +3,9 @@ package com.agriculture.mapper;
 import com.agriculture.annotation.AutoFill;
 import com.agriculture.common.enumeration.OperationType;
 import com.agriculture.pojo.DTO.CropPageQueryDTO;
+import com.agriculture.pojo.DTO.UserRecommendQueryDTO;
 import com.agriculture.pojo.VO.CropVO;
+import com.agriculture.pojo.VO.RecommendCropVO;
 import com.agriculture.pojo.entity.Crop;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Delete;
@@ -80,4 +82,19 @@ public interface CropMapper {
      */
     @Delete("delete from crop where crop_category_id=#{id}")
     void deleteByCategoryId(Long id);
+
+    /**
+     * 推荐当前用户要种植的作物
+     *
+     * @return
+     */
+    List<RecommendCropVO> recommendCropByUserId(UserRecommendQueryDTO userRecommendQueryDTO);
+
+    /**
+     * 根据类别id查询农作物
+     * @param categoryId
+     * @return
+     */
+    @Select("select * from crop where crop_category_id=#{categoryId}")
+    List<CropVO> getByCategoryId(Long categoryId);
 }
