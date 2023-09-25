@@ -23,7 +23,7 @@ public class NewsController {
     private NewsMapper newsMapper;
 
     @GetMapping
-    @Cacheable(cacheNames = "news", key = "#dateTime")
+    @Cacheable(cacheNames = "news", key = "'agriculture'")
     @ApiOperation("获取特定日期的新闻(格式为yyyy-MM-dd)")
     public Result<List<News>> getRecentNews(String dateTime) {
         List<News> news = newsMapper.getByDate(dateTime);
