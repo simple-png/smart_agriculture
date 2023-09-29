@@ -10,21 +10,28 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Component
 @Slf4j
 public class getNewsTask {
     @Autowired
     private NewsMapper newsMapper;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Scheduled(cron = "0 0 9 ? * *") //每天上午九点执行
-    @CacheEvict(cacheNames = "news", key = "'agriculture'")
     public void getAgricultureNews() {
+        //清楚所有日期缓存
+        Set<String> keys = redisTemplate.keys("news*");
+        for (String key : keys) {
+            redisTemplate.delete(key);
+        }
         String pythonFilePath = "src/main/resources/static/getNews.py";
         String output = PythonOutputUtil.output(pythonFilePath);
         if (output == null)
