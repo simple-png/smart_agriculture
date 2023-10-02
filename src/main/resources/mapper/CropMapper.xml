@@ -67,7 +67,7 @@
         join field f on f.province_id = cp.province_id
         join crop_category cc on c.crop_category_id = cc.id
         <where>
-            f.status = 0 and f.user_id=#{userId}
+            f.status = 2 and f.user_id=#{userId}
             <if test="fieldId!=null">and f.id=#{fieldId}</if>
             <if test="categoryId!=null">and cc.id=#{categoryId}</if>
         </where>
