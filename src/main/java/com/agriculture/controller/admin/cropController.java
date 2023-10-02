@@ -1,17 +1,15 @@
 package com.agriculture.controller.admin;
 
-import com.agriculture.pojo.DTO.CropDTO;
-import com.agriculture.pojo.VO.CropVO;
-import com.agriculture.service.CropService;
 import com.agriculture.common.result.PageResult;
 import com.agriculture.common.result.Result;
+import com.agriculture.pojo.DTO.CropDTO;
 import com.agriculture.pojo.DTO.CropPageQueryDTO;
+import com.agriculture.pojo.VO.CropVO;
+import com.agriculture.service.CropService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,10 +21,7 @@ import java.util.List;
 public class cropController {
     @Autowired
     private CropService cropService;
-    @Autowired
-    private RedisTemplate redisTemplate;
 
-    @Cacheable(cacheNames = "cropPageQuery", key = "#cropPageQueryDTO.page+'&'+#cropPageQueryDTO.pageSize")
     @GetMapping("/list")
     @ApiOperation("分页查询")
     public Result<PageResult> page(CropPageQueryDTO cropPageQueryDTO) {
