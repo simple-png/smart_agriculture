@@ -10,7 +10,7 @@ public class PythonOutputUtil {
         try {
             // 构建Python命令及参数
             String pythonScript = path;
-            String[] cmd = {"python", pythonScript};
+            String[] cmd = {"python3", pythonScript};
 
             // 创建ProcessBuilder对象，并设置命令及工作目录
             ProcessBuilder pb = new ProcessBuilder(cmd);
