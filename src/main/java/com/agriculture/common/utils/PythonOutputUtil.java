@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class PythonOutputUtil {
     public static String output(String path) {
@@ -21,7 +22,7 @@ public class PythonOutputUtil {
 
             // 读取Python脚本的输出结果
             InputStream inputStream = process.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "GBK"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             String line;
             StringBuilder result = new StringBuilder();
             while ((line = reader.readLine()) != null) {
