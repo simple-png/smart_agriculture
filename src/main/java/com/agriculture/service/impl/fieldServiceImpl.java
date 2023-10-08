@@ -41,13 +41,16 @@ public class fieldServiceImpl implements FieldService {
     @Override
     public void updateMoisture(Long id, String moisture) {
         Field field = fieldMapper.getById(id);
-        if (field.getCropId() != null) {
-            Field field1 = Field.builder()
-                    .soilMoisture(moisture)
-                    .id(id)
-                    .build();
-            fieldMapper.updateWithField(field1);
-        } else throw new CropExistErrorException(MessageConstant.NO_CROP);
+        if (field==null)
+            throw new FieldExistErrorException(MessageConstant.NO_FIELD);
+        if (field.getCropId() == null)
+            throw new CropExistErrorException(MessageConstant.NO_CROP);
+        Field field1 = Field.builder()
+                .soilMoisture(moisture)
+                .id(id)
+                .build();
+        fieldMapper.updateWithField(field1);
+
     }
 
     @Override
