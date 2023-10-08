@@ -99,11 +99,11 @@ public class fieldServiceImpl implements FieldService {
         double minMoisture = Double.parseDouble(split[0]);
         double maxMoisture = Double.parseDouble(split[1]);
         if (currentMoisture < minMoisture) {
-            return MessageConstant.LOW_MOISTURE;
+            return MessageConstant.LOW_MOISTURE+targetMoisture;
         } else if (currentMoisture <= maxMoisture) {
             return MessageConstant.SUITABLE_MOISTURE;
         } else {
-            return MessageConstant.HIGH_MOISTURE;
+            return MessageConstant.HIGH_MOISTURE+targetMoisture;
         }
     }
 
@@ -117,4 +117,5 @@ public class fieldServiceImpl implements FieldService {
             fieldMapper.updateWithField(field);
         }
     }
+
 }
