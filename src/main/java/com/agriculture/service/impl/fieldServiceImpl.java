@@ -1,9 +1,11 @@
 package com.agriculture.service.impl;
 
 import com.agriculture.common.constant.MessageConstant;
+import com.agriculture.common.context.BaseContext;
 import com.agriculture.common.exception.CropExistErrorException;
 import com.agriculture.common.exception.FieldExistErrorException;
 import com.agriculture.mapper.FieldMapper;
+import com.agriculture.pojo.DTO.AddFieldDTO;
 import com.agriculture.pojo.DTO.FieldDTO;
 import com.agriculture.pojo.entity.Field;
 import com.agriculture.pojo.entity.GrowthCycle;
@@ -30,6 +32,21 @@ public class fieldServiceImpl implements FieldService {
         Field field = new Field();
         BeanUtils.copyProperties(fieldDTO, field);
         if (fieldDTO.getCropId() != null) {
+            field.setStatus(1);
+            field.setPlantingTime(LocalDateTime.now());
+        } else {
+            field.setStatus(2);
+        }
+        fieldMapper.addField(field);
+    }
+
+
+    @Override
+    public void userAddField(AddFieldDTO addFieldDTO) {
+        Field field = new Field();
+        BeanUtils.copyProperties(addFieldDTO, field);
+        field.setUserId(BaseContext.getCurrentId());
+        if (addFieldDTO.getCropId() != null) {
             field.setStatus(1);
             field.setPlantingTime(LocalDateTime.now());
         } else {

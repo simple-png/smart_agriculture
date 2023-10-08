@@ -1,5 +1,6 @@
 package com.agriculture.service;
 
+import com.agriculture.pojo.DTO.AddFieldDTO;
 import com.agriculture.pojo.DTO.FieldDTO;
 import com.agriculture.pojo.entity.Field;
 
@@ -7,12 +8,16 @@ import java.util.List;
 
 public interface FieldService {
     /**
-     * 添加田地
-     *
+     * 管理端添加田地
      * @param fieldDTO
      */
     void addField(FieldDTO fieldDTO);
 
+    /**
+     * 用户端添加田地
+     * @param addFieldDTO
+     */
+    void userAddField(AddFieldDTO addFieldDTO);
     /**
      * 更新湿度
      *

@@ -2,6 +2,7 @@ package com.agriculture.controller.user;
 
 import com.agriculture.common.context.BaseContext;
 import com.agriculture.common.result.Result;
+import com.agriculture.pojo.DTO.AddFieldDTO;
 import com.agriculture.pojo.DTO.FieldDTO;
 import com.agriculture.pojo.DTO.RecommendQueryDTO;
 import com.agriculture.pojo.VO.RecommendCropVO;
@@ -28,9 +29,9 @@ public class fieldController {
 
     @PostMapping("/add")
     @ApiOperation("添加用户田地")
-    public Result addField(@RequestBody FieldDTO fieldDTO) {
-        log.info("添加用户田地:{}", fieldDTO);
-        fieldService.addField(fieldDTO);
+    public Result addField(@RequestBody AddFieldDTO addFieldDTO) {
+        log.info("添加用户田地:{}", addFieldDTO);
+        fieldService.userAddField(addFieldDTO);
         return Result.success();
     }
 
