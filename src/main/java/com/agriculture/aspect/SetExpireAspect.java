@@ -4,6 +4,7 @@ import com.agriculture.common.constant.MessageConstant;
 import com.agriculture.common.exception.BaseException;
 import com.agriculture.common.properties.JwtProperties;
 import com.agriculture.pojo.DTO.UserDTO;
+import com.agriculture.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -26,6 +27,8 @@ public class SetExpireAspect {
     private JwtProperties jwtProperties;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private UserService userService;
 
     /**
      * 切入点
@@ -41,6 +44,8 @@ public class SetExpireAspect {
         if (!(args[0] instanceof UserDTO))
             throw new BaseException(MessageConstant.UNKNOWN_ERROR);
         UserDTO dto = (UserDTO) args[0];
+        //验证用户密码是否正确
+        userService.login(dto);
         String cacheKey = "user" + "::" + dto.getUsername().hashCode();
         Long expire = redisTemplate.getExpire(cacheKey);
         if (expire == -1) {
