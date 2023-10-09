@@ -2,7 +2,7 @@ package com.agriculture.controller.admin;
 
 import com.agriculture.common.result.Result;
 import com.agriculture.pojo.DTO.FieldDTO;
-import com.agriculture.pojo.entity.Field;
+import com.agriculture.pojo.VO.FieldVO;
 import com.agriculture.service.FieldService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,9 +44,9 @@ public class fieldController {
 
     @GetMapping("/{id}")
     @ApiOperation("根据id获取田地")
-    public Result<Field> getById(@PathVariable Long id) {
+    public Result<FieldVO> getById(@PathVariable Long id) {
         log.info("根据田地id:{}获取数据", id);
-        Field field = fieldService.getById(id);
+        FieldVO field = fieldService.getById(id);
         return Result.success(field);
     }
 }
