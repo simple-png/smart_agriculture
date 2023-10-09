@@ -39,8 +39,12 @@ public interface ProvinceMapper {
 
     /**
      * 根据农产品Id删除关系
+     *
      * @param id
      */
     @Delete("delete from crop_province where crop_id=#{id}")
     void deleteByCropId(Long id);
+
+    @Select("select * from province where id=#{id}")
+    Province getById(Long id);
 }

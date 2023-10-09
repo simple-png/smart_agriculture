@@ -4,9 +4,12 @@ import com.agriculture.common.constant.MessageConstant;
 import com.agriculture.common.context.BaseContext;
 import com.agriculture.common.exception.CropExistErrorException;
 import com.agriculture.common.exception.FieldExistErrorException;
+import com.agriculture.mapper.CropMapper;
 import com.agriculture.mapper.FieldMapper;
+import com.agriculture.mapper.ProvinceMapper;
 import com.agriculture.pojo.DTO.AddFieldDTO;
 import com.agriculture.pojo.DTO.FieldDTO;
+import com.agriculture.pojo.VO.FieldVO;
 import com.agriculture.pojo.entity.Field;
 import com.agriculture.pojo.entity.GrowthCycle;
 import com.agriculture.service.CropCycleService;
@@ -17,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +30,10 @@ public class fieldServiceImpl implements FieldService {
     private FieldMapper fieldMapper;
     @Autowired
     private CropCycleService cropCycleService;
+    @Autowired
+    private CropMapper cropMapper;
+    @Autowired
+    private ProvinceMapper provinceMapper;
 
     @Override
     public void addField(FieldDTO fieldDTO) {
@@ -58,7 +66,7 @@ public class fieldServiceImpl implements FieldService {
     @Override
     public void updateMoisture(Long id, String moisture) {
         Field field = fieldMapper.getById(id);
-        if (field==null)
+        if (field == null)
             throw new FieldExistErrorException(MessageConstant.NO_FIELD);
         if (field.getCropId() == null)
             throw new CropExistErrorException(MessageConstant.NO_CROP);
@@ -91,13 +99,35 @@ public class fieldServiceImpl implements FieldService {
     }
 
     @Override
-    public Field getById(Long id) {
-        return fieldMapper.getById(id);
+    public FieldVO getById(Long id) {
+        Field field = fieldMapper.getById(id);
+        FieldVO fieldVO = new FieldVO();
+        BeanUtils.copyProperties(field, fieldVO);
+        Long cropId = field.getCropId();
+        if (cropId != null) {
+            fieldVO.setName(cropMapper.getById(cropId).getName());
+        }
+        fieldVO.setProvinceName(provinceMapper.getById(Long.valueOf(field.getProvinceId())).getName());
+        return fieldVO;
     }
 
     @Override
-    public List<Field> getByUserId(Long userId) {
-        return fieldMapper.listByUserId(userId);
+    public List<FieldVO> getByUserId(Long userId) {
+        List<Field> fields = fieldMapper.listByUserId(userId);
+        ArrayList<FieldVO> list = new ArrayList<>();
+        fields.forEach(field -> {
+            FieldVO fieldVO = new FieldVO();
+            Long cropId = field.getCropId();
+            if (cropId != null) {
+                String cropName = cropMapper.getById(cropId).getName();
+                fieldVO.setCropName(cropName);
+            }
+            String provinceName = provinceMapper.getById(Long.valueOf(field.getProvinceId())).getName();
+            BeanUtils.copyProperties(field, fieldVO);
+            fieldVO.setProvinceName(provinceName);
+            list.add(fieldVO);
+        });
+        return list;
     }
 
     @Override
@@ -116,11 +146,11 @@ public class fieldServiceImpl implements FieldService {
         double minMoisture = Double.parseDouble(split[0]);
         double maxMoisture = Double.parseDouble(split[1]);
         if (currentMoisture < minMoisture) {
-            return MessageConstant.LOW_MOISTURE+targetMoisture;
+            return MessageConstant.LOW_MOISTURE + targetMoisture;
         } else if (currentMoisture <= maxMoisture) {
             return MessageConstant.SUITABLE_MOISTURE;
         } else {
-            return MessageConstant.HIGH_MOISTURE+targetMoisture;
+            return MessageConstant.HIGH_MOISTURE + targetMoisture;
         }
     }
 

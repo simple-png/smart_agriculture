@@ -5,8 +5,8 @@ import com.agriculture.common.result.Result;
 import com.agriculture.pojo.DTO.AddFieldDTO;
 import com.agriculture.pojo.DTO.FieldDTO;
 import com.agriculture.pojo.DTO.RecommendQueryDTO;
+import com.agriculture.pojo.VO.FieldVO;
 import com.agriculture.pojo.VO.RecommendCropVO;
-import com.agriculture.pojo.entity.Field;
 import com.agriculture.service.CropService;
 import com.agriculture.service.FieldService;
 import io.swagger.annotations.Api;
@@ -53,17 +53,17 @@ public class fieldController {
 
     @GetMapping("/{id}")
     @ApiOperation("根据田地id获取田地")
-    public Result<Field> getById(@PathVariable Long id) {
+    public Result<FieldVO> getById(@PathVariable Long id) {
         log.info("根据田地id:{}获取数据", id);
-        Field field = fieldService.getById(id);
+        FieldVO field = fieldService.getById(id);
         return Result.success(field);
     }
 
     @GetMapping("/all")
     @ApiOperation("获取用户id的所有田地")
-    public Result<List<Field>> getByUserId() {
+    public Result<List<FieldVO>> getByUserId() {
         log.info("根据用户id获取所有田地信息");
-        List<Field> list = fieldService.getByUserId(BaseContext.getCurrentId());
+        List<FieldVO> list = fieldService.getByUserId(BaseContext.getCurrentId());
         return Result.success(list);
     }
 

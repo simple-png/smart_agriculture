@@ -2,7 +2,7 @@ package com.agriculture.service;
 
 import com.agriculture.pojo.DTO.AddFieldDTO;
 import com.agriculture.pojo.DTO.FieldDTO;
-import com.agriculture.pojo.entity.Field;
+import com.agriculture.pojo.VO.FieldVO;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public interface FieldService {
      * @param id
      * @return
      */
-    Field getById(Long id);
+    FieldVO getById(Long id);
 
     /**
      * 根据用户id获取田地信息
@@ -53,7 +53,7 @@ public interface FieldService {
      * @param userId
      * @return
      */
-    List<Field> getByUserId(Long userId);
+    List<FieldVO> getByUserId(Long userId);
 
     /**
      * 判断是否需要浇水
