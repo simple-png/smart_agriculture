@@ -122,9 +122,12 @@ public class fieldServiceImpl implements FieldService {
                 String cropName = cropMapper.getById(cropId).getName();
                 fieldVO.setCropName(cropName);
             }
-            String provinceName = provinceMapper.getById(Long.valueOf(field.getProvinceId())).getName();
+            Integer provinceId = field.getProvinceId();
+            if (provinceId != null) {
+                String provinceName = provinceMapper.getById(Long.valueOf(provinceId)).getName();
+                fieldVO.setProvinceName(provinceName);
+            }
             BeanUtils.copyProperties(field, fieldVO);
-            fieldVO.setProvinceName(provinceName);
             list.add(fieldVO);
         });
         return list;
