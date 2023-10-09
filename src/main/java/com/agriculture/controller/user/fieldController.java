@@ -69,7 +69,7 @@ public class fieldController {
 
     @PostMapping("/soil/{id}")
     @ApiOperation("根据田地id发送当前湿度")
-    public Result getSoilMoisture(@PathVariable("id") Long id, @RequestBody String moisture) {
+    public Result getSoilMoisture(@PathVariable("id") Long id, String moisture) {
         log.info("监控{}田地的湿度:{}", id, moisture);
         fieldService.updateMoisture(id, moisture);
         return Result.success();
