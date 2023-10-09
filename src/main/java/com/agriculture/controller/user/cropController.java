@@ -3,6 +3,7 @@ package com.agriculture.controller.user;
 import com.agriculture.common.result.PageResult;
 import com.agriculture.common.result.Result;
 import com.agriculture.pojo.DTO.CropPageQueryDTO;
+import com.agriculture.pojo.VO.CropOptionVO;
 import com.agriculture.pojo.VO.CropVO;
 import com.agriculture.service.CropService;
 import io.swagger.annotations.Api;
@@ -47,5 +48,13 @@ public class cropController {
         log.info("查询id为:{}的农作物", id);
         List<CropVO> cropVO = cropService.getByCategoryId(id);
         return Result.success(cropVO);
+    }
+
+    @GetMapping("/all")
+    @ApiOperation("获取所有农作物的id和name")
+    public Result<List<CropOptionVO>> listAll(){
+        log.info("获取所有农作物的id和name");
+        List<CropOptionVO> list=cropService.listAll();
+        return Result.success(list);
     }
 }

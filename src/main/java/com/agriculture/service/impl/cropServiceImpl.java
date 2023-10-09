@@ -7,6 +7,7 @@ import com.agriculture.common.result.PageResult;
 import com.agriculture.mapper.CropMapper;
 import com.agriculture.mapper.ProvinceMapper;
 import com.agriculture.pojo.DTO.*;
+import com.agriculture.pojo.VO.CropOptionVO;
 import com.agriculture.pojo.VO.CropVO;
 import com.agriculture.pojo.VO.RecommendCropVO;
 import com.agriculture.pojo.entity.Crop;
@@ -113,5 +114,10 @@ public class cropServiceImpl implements CropService {
             throw new CategoryExistErrorException(MessageConstant.NO_CATEGORY);
         List<CropVO> list = cropMapper.getByCategoryId(id);
         return list;
+    }
+
+    @Override
+    public List<CropOptionVO> listAll() {
+        return cropMapper.listAll();
     }
 }

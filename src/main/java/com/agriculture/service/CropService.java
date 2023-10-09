@@ -4,6 +4,7 @@ import com.agriculture.common.result.PageResult;
 import com.agriculture.pojo.DTO.CropDTO;
 import com.agriculture.pojo.DTO.CropPageQueryDTO;
 import com.agriculture.pojo.DTO.RecommendQueryDTO;
+import com.agriculture.pojo.VO.CropOptionVO;
 import com.agriculture.pojo.VO.CropVO;
 import com.agriculture.pojo.VO.RecommendCropVO;
 
@@ -56,4 +57,10 @@ public interface CropService {
      * @return
      */
     List<CropVO> getByCategoryId(Long id);
+
+    /**
+     * 获取所有农作物的id和name
+     * @return
+     */
+    List<CropOptionVO> listAll();
 }

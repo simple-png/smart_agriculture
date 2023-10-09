@@ -4,6 +4,7 @@ import com.agriculture.annotation.AutoFill;
 import com.agriculture.common.enumeration.OperationType;
 import com.agriculture.pojo.DTO.CropPageQueryDTO;
 import com.agriculture.pojo.DTO.UserRecommendQueryDTO;
+import com.agriculture.pojo.VO.CropOptionVO;
 import com.agriculture.pojo.VO.CropVO;
 import com.agriculture.pojo.VO.RecommendCropVO;
 import com.agriculture.pojo.entity.Crop;
@@ -97,4 +98,11 @@ public interface CropMapper {
      */
     @Select("select * from crop where crop_category_id=#{categoryId}")
     List<CropVO> getByCategoryId(Long categoryId);
+
+    /**
+     * 获取所有农作物的id和name
+     * @return
+     */
+    @Select("select id,name from crop")
+    List<CropOptionVO> listAll();
 }
