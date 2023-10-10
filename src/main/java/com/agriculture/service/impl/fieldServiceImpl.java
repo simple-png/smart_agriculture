@@ -2,6 +2,7 @@ package com.agriculture.service.impl;
 
 import com.agriculture.common.constant.MessageConstant;
 import com.agriculture.common.context.BaseContext;
+import com.agriculture.common.exception.BaseException;
 import com.agriculture.common.exception.CropExistErrorException;
 import com.agriculture.common.exception.FieldExistErrorException;
 import com.agriculture.mapper.CropMapper;
@@ -143,7 +144,10 @@ public class fieldServiceImpl implements FieldService {
             String errorMessage = id + "田地" + MessageConstant.NOT_CULTIVATED;
             throw new CropExistErrorException(errorMessage);
         }
-        double currentMoisture = Double.parseDouble(field.getSoilMoisture());
+        String soilMoisture = field.getSoilMoisture();
+        if (soilMoisture == null)
+            throw new BaseException(MessageConstant.FAILED_TO_GET_MOISTURE);
+        double currentMoisture = Double.parseDouble(soilMoisture);
         String targetMoisture = growthCycle.getSoilMoisture();
         String[] split = targetMoisture.split("-");
         double minMoisture = Double.parseDouble(split[0]);
