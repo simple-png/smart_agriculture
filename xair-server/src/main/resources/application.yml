@@ -1,0 +1,38 @@
+server:
+  port: 8080
+spring:
+  main:
+    allow-circular-references: true
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/smart_agriculture?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: 111111
+  redis:
+    port: 6379
+    host: 127.0.0.1
+    password: 111111
+    database: 5
+
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.agriculture.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+farm:
+  jwt:
+    # ??jwt??????????
+    admin-secret-key: wbj\=3as15f82dg5ID6f/P4diad}|afbk
+    # ??jwt????
+    admin-ttl: 72000000
+    # ?????????????
+    admin-token-name: token
+    user-secret-key: ip[san/]|anv8/aK04@GVd8*-3|'g>iF7*#f
+    user-ttl: 72000000
+    user-token-name: authentication
+  amap:
+    key: 4b043f375c41ce905a12f2681f5529fd

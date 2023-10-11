@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.agriculture.mapper.CropMapper">
+    <select id="pageQuery" resultType="com.agriculture.VO.CropVO">
+        select distinct c.*,cc.name as crop_category_name
+        from crop c
+        join crop_category cc on c.crop_category_id = cc.id
+        join crop_province cp on c.id = cp.crop_id
+        join province p on cp.province_id = p.id
+        <where>
+            <if test="name!=null">
+                and c.name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId!=null">
+                and c.crop_category_id=#{categoryId}
+            </if>
+            <if test="growthCycle!=null">
+                and c.growth_cycle=#{growthCycle}
+            </if>
+            <if test="yield!=null">
+                and c.yield=#{yield}
+            </if>
+            <if test="characteristics!=null">
+                and c.characteristics like concat('%',#{characteristics},'%')
+            </if>
+            <if test="provinceName!=null">
+                and p.name like concat('%',#{provinceName},'%')
+            </if>
+        </where>
+        order by c.create_time desc
+    </select>
+    <insert id="add" keyProperty="id" useGeneratedKeys="true">
+        insert into crop(name, growth_cycle, yield, characteristics, cultivation_techniques, promotion,
+                         crop_category_id, create_time, update_time, create_user, update_user)
+        VALUES (#{name}, #{growthCycle}, #{yield}, #{characteristics}, #{cultivationTechniques}, #{promotion},
+                #{cropCategoryId}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
+    </insert>
+    <update id="update">
+        update crop
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="growthCycle!=null">growth_cycle=#{growthCycle},</if>
+            <if test="yield!=null">yield=#{yield},</if>
+            <if test="characteristics!=null">characteristics=#{characteristics},</if>
+            <if test="cultivationTechniques!=null">cultivation_techniques=#{cultivationTechniques},</if>
+            <if test="promotion!=null">promotion=#{promotion},</if>
+            <if test="cropCategoryId!=null">crop_category_id=#{cropCategoryId},</if>
+            <if test="updateTime!=null">update_time=#{updateTime},</if>
+            <if test="updateUser!=null">update_user=#{updateUser},</if>
+        </set>
+        where id=#{id}
+    </update>
+    <select id="recommendCropByUserId" resultType="com.agriculture.VO.RecommendCropVO">
+        select c.id,
+        c.name,
+        c.growth_cycle,
+        c.yield,
+        c.characteristics,
+        c.cultivation_techniques,
+        c.promotion,
+        cc.name as categoryName,
+        f.id as fieldId,
+        f.name as fieldName
+        from crop c
+        join crop_province cp on c.id = cp.crop_id
+        join field f on f.province_id = cp.province_id
+        join crop_category cc on c.crop_category_id = cc.id
+        <where>
+            f.status = 2 and f.user_id=#{userId}
+            <if test="fieldId!=null">and f.id=#{fieldId}</if>
+            <if test="categoryId!=null">and cc.id=#{categoryId}</if>
+        </where>
+    </select>
+</mapper>

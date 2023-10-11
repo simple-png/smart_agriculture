@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.agriculture.mapper.FieldMapper">
+    <update id="updateWithField">
+        update field
+        <set>
+            <if test="userId!=null">user_id=#{userId},</if>
+            <if test="name!=null">name=#{name},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="soilMoisture!=null">soil_moisture=#{soilMoisture},</if>
+            <if test="plantingTime!=null">planting_time=#{plantingTime},</if>
+            <if test="cropId!=null">crop_id=#{cropId},</if>
+            <if test="provinceId!=null">province_id=#{provinceId},</if>
+            <if test="updateTime!=null">update_time=#{updateTime},</if>
+            <if test="updateUser!=null">update_user=#{updateUser},</if>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>
