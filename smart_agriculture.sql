@@ -829,3 +829,14 @@ create table news
     url         varchar(255) comment '链接',
     create_time datetime comment '创建时间'
 ) comment '新闻';
+create table login_log(
+    id int primary key auto_increment,
+    username varchar(32) not null comment '用户昵称',
+    ip varchar(64) comment 'ip地址',
+    ip_source varchar(100) comment 'ip地址所在地方',
+    os varchar(100) comment '操作系统',
+    browser varchar(100) comment '浏览器版本号',
+    description varchar(10) comment '是否登录成功',
+    create_time datetime not null comment '创建时间',
+    user_agent varchar(2000) comment 'ua'
+) comment '用户登录记录';

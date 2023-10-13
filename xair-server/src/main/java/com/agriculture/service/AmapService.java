@@ -2,6 +2,8 @@ package com.agriculture.service;
 
 import com.agriculture.entity.Weather;
 
+import java.util.Map;
+
 public interface AmapService {
 
     /**
@@ -16,6 +18,6 @@ public interface AmapService {
      *
      * @return
      */
-    String getAdcode();
+    Map<String,Object> getLocation();
 
 }

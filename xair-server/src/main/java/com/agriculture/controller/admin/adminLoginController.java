@@ -1,5 +1,6 @@
 package com.agriculture.controller.admin;
 
+import com.agriculture.annotation.LoginLogAnnotation;
 import com.agriculture.properties.JwtProperties;
 import com.agriculture.entity.Admin;
 import com.agriculture.service.AdminService;
@@ -33,6 +34,7 @@ public class adminLoginController {
      * @param adminDTO
      * @return
      */
+    @LoginLogAnnotation
     @PostMapping("/login")
     @ApiOperation("管理员登录")
     public Result<AdminVO> login(@RequestBody AdminDTO adminDTO) {

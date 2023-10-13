@@ -12,7 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class UserUpdateWithUserDTO implements Serializable {
-    private String username;
     private String newPassword;
     private String oldPassword;
 }

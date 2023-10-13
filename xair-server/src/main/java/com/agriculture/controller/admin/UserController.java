@@ -35,7 +35,6 @@ public class UserController {
     public Result update(@RequestBody UserUpdateWithUserDTO dto) {
         log.info("用户信息修改:{}", dto);
         userService.updateWithUser(dto);
-        redisTemplate.delete("user" + "::" + dto.getUsername().hashCode());
         return Result.success();
     }
 }

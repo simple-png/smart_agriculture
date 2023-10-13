@@ -19,4 +19,5 @@ public class MessageConstant {
     public static final String KEY_ERROR = "键为空";
     public static final String FAILED_GET_NEWS = "获取新闻失败";
     public static final String FAILED_TO_GET_MOISTURE = "获取湿度失败";
+    public static final String FAILED_TO_GET_ARGS = "获取方法参数失败";
 }

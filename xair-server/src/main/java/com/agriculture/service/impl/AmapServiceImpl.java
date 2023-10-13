@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -25,7 +26,8 @@ public class AmapServiceImpl implements AmapService {
 
     @Override
     public Weather getWeather() {
-        String adcode = getAdcode();
+        Map<String, Object> location = getLocation();
+        String adcode = (String) location.get("adcode");
         HashMap<String, String> map = new HashMap<>();
         map.put("city", adcode);
         map.put("key", key);
@@ -47,14 +49,15 @@ public class AmapServiceImpl implements AmapService {
     }
 
     @Override
-    public String getAdcode() {
+    public Map<String,Object> getLocation() {
         HashMap<String, String> map = new HashMap<>();
-        String ip = IpContext.getIpAddress();
+        String ip = IpContext.getCurrentIp();
         log.info("用户当前ip:{}",ip);
         map.put("key", key);
         map.put("ip",ip);
         String json = HttpClientUtil.doGet(getIpURL, map);
         JSONObject jsonObject = JSON.parseObject(json);
-        return jsonObject.getString("adcode");
+        Map<String, Object> innerMap = jsonObject.getInnerMap();
+        return innerMap;
     }
 }

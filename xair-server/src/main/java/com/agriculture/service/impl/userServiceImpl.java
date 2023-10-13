@@ -26,8 +26,6 @@ import org.springframework.util.DigestUtils;
 public class userServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private RedisTemplate redisTemplate;
 
     @Override
     public User login(UserDTO userDTO) {
@@ -76,8 +74,6 @@ public class userServiceImpl implements UserService {
         password = DigestUtils.md5DigestAsHex(password.getBytes());
         if (!password.equals(user.getPassword()))
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
-        // TODO 设计问题在service层调用redis 后期优化
-        redisTemplate.delete("user::"+user.getUsername().hashCode());
         userMapper.deleteById(BaseContext.getCurrentId());
     }
 
@@ -89,8 +85,6 @@ public class userServiceImpl implements UserService {
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         String md5NewPassword = DigestUtils.md5DigestAsHex(dto.getNewPassword().getBytes());
         user.setPassword(md5NewPassword);
-        //为清理缓存
-        dto.setUsername(user.getUsername());
         userMapper.update(user);
     }
 }

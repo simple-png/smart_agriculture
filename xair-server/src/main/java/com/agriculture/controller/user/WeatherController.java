@@ -30,12 +30,4 @@ public class WeatherController {
         Weather weather = amapService.getWeather();
         return Result.success(weather);
     }
-
-    @ApiOperation("获取用户ip地址")
-    @GetMapping("/ip")
-    public Result getIp(HttpServletRequest request) {
-        String ipAddress = request.getRemoteAddr();
-        IpContext.setIpAddress(ipAddress);
-        return Result.success();
-    }
 }

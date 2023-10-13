@@ -3,11 +3,18 @@ package com.agriculture.context;
 import lombok.Getter;
 
 public class IpContext {
-    @Getter
-    private static String ipAddress;
+    public static ThreadLocal<String> threadLocal = new ThreadLocal<>();
 
-    public static void setIpAddress(String ip) {
-        ipAddress = ip;
+    public static void setCurrentIp(String ip) {
+        threadLocal.set(ip);
+    }
+
+    public static String getCurrentIp() {
+        return threadLocal.get();
+    }
+
+    public static void removeCurrentIp() {
+        threadLocal.remove();
     }
 
 }

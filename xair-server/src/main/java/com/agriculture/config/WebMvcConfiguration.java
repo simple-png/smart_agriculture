@@ -1,5 +1,7 @@
 package com.agriculture.config;
 
+import com.agriculture.interceptor.IpInterceptor;
+import com.agriculture.interceptor.UserAgentInterceptor;
 import com.agriculture.json.JacksonObjectMapper;
 import com.agriculture.interceptor.JwtTokenAdminInterceptor;
 import com.agriculture.interceptor.JwtTokenUserInterceptor;
@@ -32,6 +34,10 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
     @Autowired
     private JwtTokenUserInterceptor jwtTokenUserInterceptor;
+    @Autowired
+    private UserAgentInterceptor userAgentInterceptor;
+    @Autowired
+    private IpInterceptor ipInterceptor;
 
 
 
@@ -43,7 +49,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     protected void addInterceptors(InterceptorRegistry registry) {
         log.info("开始注册自定义管理员拦截器...");
         registry.addInterceptor(jwtTokenAdminInterceptor)
-                // TODO 测试阶段不开启
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/login");
         log.info("开始注册自定义用户拦截器...");
@@ -52,6 +57,14 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/register")
                 .excludePathPatterns("/user/field/soil/*");
+        log.info("开始拦截请求获取UA");
+        registry.addInterceptor(userAgentInterceptor)
+                .addPathPatterns("/user/login")
+                .addPathPatterns("/admin/login");
+        log.info("开始拦截请求获取ip");
+        registry.addInterceptor(ipInterceptor)
+                .addPathPatterns("/admin/**")
+                .addPathPatterns("/user/**");
     }
 
     /**
