@@ -34,7 +34,7 @@ public class userServiceImpl implements UserService {
         User user = userMapper.login(username);
         if (user == null)
             throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
-        if (!user.getPassword().equals(password))
+        if (!password.equals(user.getPassword()))
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         return user;
     }
@@ -81,7 +81,7 @@ public class userServiceImpl implements UserService {
     public void updateWithUser(UserUpdateWithUserDTO dto) {
         String md5OldPassword = DigestUtils.md5DigestAsHex(dto.getOldPassword().getBytes());
         User user = userMapper.getById(BaseContext.getCurrentId());
-        if (!user.getPassword().equals(md5OldPassword))
+        if (!md5OldPassword.equals(user.getPassword()))
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         String md5NewPassword = DigestUtils.md5DigestAsHex(dto.getNewPassword().getBytes());
         user.setPassword(md5NewPassword);

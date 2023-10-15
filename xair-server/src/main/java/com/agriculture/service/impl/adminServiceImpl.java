@@ -23,7 +23,7 @@ public class adminServiceImpl implements AdminService {
         Admin admin = adminMapper.login(username);
         if (admin==null)
             throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
-        if (!admin.getPassword().equals(password))
+        if (!password.equals(admin.getPassword()))
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
 
         return admin;
